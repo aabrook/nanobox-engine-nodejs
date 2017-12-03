@@ -64,7 +64,7 @@ default_dep_manager() {
 # Install the nodejs runtime along with any dependencies.
 install_runtime_packages() {
   pkgs=("$(runtime)" "$(python_version)")
-  
+
   # add any client dependencies
   pkgs+=("$(query_dependencies)")
 
@@ -97,7 +97,7 @@ query_dependencies() {
   if [[ `grep 'redis\|spade\|rebridge' $(nos_code_dir)/package.json` ]]; then
     deps+=(redis)
   fi
-  
+
   echo "${deps[@]}"
 }
 
@@ -109,6 +109,8 @@ install_npm_deps() {
   else # fallback to npm (slow)
     npm_install
   fi
+
+  pulp_install
 }
 
 # install dependencies via yarn
@@ -130,3 +132,8 @@ npm_install() {
     cd - > /dev/null
   fi
 }
+
+pulp_install() {
+  nos_run_process "Installing purescript modules" "npm install -g pulp purescript bower"
+}
+
