@@ -135,5 +135,5 @@ npm_install() {
 
 pulp_install() {
   nos_run_process "Installing purescript modules" "npm install -g pulp purescript bower"
+  nos_run_process "Installing bower deps" "bower install"
 }
-
